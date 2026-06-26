@@ -1,0 +1,55 @@
+# SPDX-FileCopyrightText: 2026 Pôle d'Expertise de la Régulation Numérique <contact@peren.gouv.fr>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# REUSE / SPDX compliance for the FLIPS public repository.
+# Ref: https://reuse.software/spec-3.3/#reusetoml
+#
+# Every [[annotations]] block carries BOTH SPDX-FileCopyrightText AND SPDX-License-Identifier —
+# a license-only annotation fails `reuse lint`. Licensing buckets:
+#   - first-party code / config / CI / docs  -> MIT (PEReN)
+#   - datasets and derived data / results     -> CC-BY-4.0 (PEReN). The blanket CC-BY-4.0 tag does
+#     NOT override the stricter per-model OUTPUT terms (Cohere Command-R / Aya = CC-BY-NC, Gemma =
+#     Gemma Terms of Use) — see data/LICENSE and docs/provenance.md.
+#   - vendored upstream LLMmap subtree         -> MIT, Copyright (c) 2024 pasquini-dario
+#     (github.com/pasquini-dario/LLMmap; license verified)
+#   - generated lockfiles                      -> CC0-1.0
+#
+# Blocks are ordered so the more specific intent wins on overlaps (the last matching block wins):
+# data after code; the LLMmap subtree uses precedence = "override".
+version = 1
+
+# Generated lockfiles — no creative content.
+[[annotations]]
+path = ["poetry.lock", "package-lock.json", "renovate.json"]
+SPDX-FileCopyrightText = "2026 Pôle d'Expertise de la Régulation Numérique <contact@peren.gouv.fr>"
+SPDX-License-Identifier = "CC0-1.0"
+
+# First-party source, scripts, experiment configs, tests, config, CI workflows, and loose
+# repo-root config files.
+[[annotations]]
+path = ["src/**", "scripts/**", "XP_configs/**", "tests/**", "config/**", ".github/**", "Makefile", ".gitignore", "Productions/.gitignore", ".env.example", "CITATION.cff"]
+SPDX-FileCopyrightText = "2026 Pôle d'Expertise de la Régulation Numérique <contact@peren.gouv.fr>"
+SPDX-License-Identifier = "MIT"
+
+# First-party documentation.
+[[annotations]]
+path = ["docs/**", "README.md"]
+SPDX-FileCopyrightText = "2026 Pôle d'Expertise de la Régulation Numérique <contact@peren.gouv.fr>"
+SPDX-License-Identifier = "MIT"
+
+# Datasets and derived data / results (CC-BY-4.0). Per-model OUTPUT terms still apply on top —
+# see data/LICENSE and docs/provenance.md (Cohere CC-BY-NC, Gemma ToU).
+[[annotations]]
+path = ["data/**", "datasets/**", "Productions/Intersection_vocab/**", "Productions/Black_list_models_in_runs.json", "XP_configs/e3_flips_vs_llmmap/llmmap_if_data/**", "Productions/FLiPS_ICML_light_subset/**"]
+SPDX-FileCopyrightText = "2026 Pôle d'Expertise de la Régulation Numérique <contact@peren.gouv.fr>"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Vendored upstream LLMmap (github.com/pasquini-dario/LLMmap) — upstream MIT, not blanket PEReN.
+# override so the upstream attribution wins over the broader src/** block for this subtree.
+[[annotations]]
+path = ["src/Fingerprinting_methods/LLMmap/**"]
+precedence = "override"
+SPDX-FileCopyrightText = "2024 pasquini-dario"
+SPDX-License-Identifier = "MIT"
+

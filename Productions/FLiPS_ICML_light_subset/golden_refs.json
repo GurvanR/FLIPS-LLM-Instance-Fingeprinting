@@ -1,0 +1,83 @@
+{
+  "_doc": "Out-of-box golden regression reference for the light subset. Re-captured by `make gate-golden` running the SAME XP_configs/Smoke_light config. Layered tolerances: label_set EXACT; feature_cache md5 within-env / np.allclose cross-env; accuracy band >= +/-5pp mix_tp, +/-2pp tp_wise (wide: unseeded token_pair_mixing variance).",
+  "smoke_config": "XP_configs/Smoke_light/Smoke_light.yaml",
+  "run_name": "FLiPS_ICML_light_subset",
+  "token_pairs": [
+    "ali-yg",
+    "awk-ise",
+    "crit-SA",
+    "City-load",
+    "df-bits"
+  ],
+  "base_models": [
+    "CohereForAI/c4ai-command-r-plus",
+    "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+    "google/gemma-2-9b-it"
+  ],
+  "feature_cache_md5": {
+    "ali-yg/CohereForAI__c4ai-command-r-plus.npy": "baa7117d18c80e0df091acc6062ac420",
+    "ali-yg/deepseek-ai__DeepSeek-Coder-V2-Lite-Instruct.npy": "bc75137f424a2b2958653f4f1ae915f9",
+    "ali-yg/google__gemma-2-9b-it.npy": "c9fb94f4631e5cc884983d4681cf3398",
+    "ali-yg/numpy_default.npy": "c0079bd915440b646f4400a7204c58ec",
+    "awk-ise/CohereForAI__c4ai-command-r-plus.npy": "7259c59e07de3614c43ce973fb19826e",
+    "awk-ise/deepseek-ai__DeepSeek-Coder-V2-Lite-Instruct.npy": "cf4770cce6fcfeb025d41f417f32dc75",
+    "awk-ise/google__gemma-2-9b-it.npy": "da315a498236e3cd6e9edfd1b1f477c7",
+    "awk-ise/numpy_default.npy": "2c0fb23d8aa11c39c7faa587f88bcaae",
+    "crit-SA/CohereForAI__c4ai-command-r-plus.npy": "ec514b022b905ca994f1958f00732e5d",
+    "crit-SA/deepseek-ai__DeepSeek-Coder-V2-Lite-Instruct.npy": "2c9ef52e7646e2a2698082e54556ab94",
+    "crit-SA/google__gemma-2-9b-it.npy": "d4b5841fc3330707950b8f942717ffff",
+    "crit-SA/numpy_default.npy": "ca6a2e0e988f2fe4cc06abeac6a63863",
+    "City-load/CohereForAI__c4ai-command-r-plus.npy": "b577078587251d0df48646b77aca1eb8",
+    "City-load/deepseek-ai__DeepSeek-Coder-V2-Lite-Instruct.npy": "29d0595679f54364890997b077098008",
+    "City-load/google__gemma-2-9b-it.npy": "da7166b945cf4867de17270e2813fd5f",
+    "City-load/numpy_default.npy": "2f6dd135728080674c0b05beaaae3362",
+    "df-bits/CohereForAI__c4ai-command-r-plus.npy": "ce8d1f637a00322a4e5f0794db12733b",
+    "df-bits/deepseek-ai__DeepSeek-Coder-V2-Lite-Instruct.npy": "366651ecd541de10205872a5c1cdbb5c",
+    "df-bits/google__gemma-2-9b-it.npy": "3853d677996b0ecf1ce1e05d8fa2da73",
+    "df-bits/numpy_default.npy": "a59f465f707fbfc4b7a4d982f0480c72"
+  },
+  "label_set": [
+    "CohereForAI/c4ai-command-r-plus_temp-0.4_sp--1",
+    "CohereForAI/c4ai-command-r-plus_temp-1.0_sp--1",
+    "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct_temp-0.4_sp--1",
+    "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct_temp-1.0_sp--1",
+    "google/gemma-2-9b-it_temp-0.4_sp--1",
+    "google/gemma-2-9b-it_temp-1.0_sp--1"
+  ],
+  "smoke_results": {
+    "mix_tp_at_pred_utpmax|bs=2|XGBoost": {
+      "per_tp": {
+        "ali-yg_crit-SA": 0.981771,
+        "awk-ise_crit-SA": 0.972656
+      },
+      "accuracy_mean_over_tps": 0.977213
+    },
+    "mix_tp_at_pred|bs=2|XGBoost": {
+      "per_tp": {
+        "ali-yg_crit-SA": 0.981771,
+        "awk-ise_crit-SA": 0.972656
+      },
+      "accuracy_mean_over_tps": 0.977213
+    },
+    "tp_wise|bs=1|XGBoost": {
+      "per_tp": {
+        "ali-yg": 0.953125,
+        "awk-ise": 0.839844,
+        "crit-SA": 0.927083,
+        "City-load": 0.936198,
+        "df-bits": 0.972656
+      },
+      "accuracy_mean_over_tps": 0.925781
+    },
+    "tp_wise|bs=2|XGBoost": {
+      "per_tp": {
+        "ali-yg": 0.989583,
+        "awk-ise": 0.885417,
+        "crit-SA": 0.981771,
+        "City-load": 0.984375,
+        "df-bits": 0.994792
+      },
+      "accuracy_mean_over_tps": 0.967188
+    }
+  }
+}

@@ -1,0 +1,148 @@
+LLMmap_ICML:
+  min_seq_length: 100
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 500
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 500
+  TOKEN_PAIRS_SET: NO_TOKEN_PAIRS
+
+FLiPS_ICML: 
+  min_seq_length: 100
+  nb_of_samples: 80
+  dyn_checking_batch_size: 500
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 500
+  TOKEN_PAIRS_SET: ICML_SET_OF_TOKEN_PAIRS
+
+LLMmap_ICML_uncensored:
+  min_seq_length: 100
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 500
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 500
+  TOKEN_PAIRS_SET: NO_TOKEN_PAIRS
+
+FLiPS_ICML_uncensored: 
+  min_seq_length: 100
+  nb_of_samples: 80
+  dyn_checking_batch_size: 500
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 500
+  TOKEN_PAIRS_SET: ICML_SET_OF_TOKEN_PAIRS
+
+TempsLogprobs2:  # SP impact experiment
+  min_seq_length: 50
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 10
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 750
+  logprobs: 500
+  TOKEN_PAIRS_SET: SMALL_SET_OF_TOKEN_PAIRS
+
+LLMmap_compare_1:  # SP impact experiment
+  min_seq_length: 100
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 250
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 750
+  TOKEN_PAIRS_SET: NO_TOKEN_PAIRS
+
+LLMmap_compare_800:
+  min_seq_length: 100
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 250
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 750
+  TOKEN_PAIRS_SET: NO_TOKEN_PAIRS
+
+LLMmap_temps_2000:
+  min_seq_length: 100
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 250
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 750
+  TOKEN_PAIRS_SET: NO_TOKEN_PAIRS
+  
+SPImpact:  # SP impact experiment
+  min_seq_length: 100
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 250
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 750
+  TOKEN_PAIRS_SET: SMALL_SET_OF_TOKEN_PAIRS
+
+SPImpact_toy: 
+  min_seq_length: 100
+  #nb_of_samples: 80
+  dyn_checking_batch_size: 50
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 500
+  logprobs: 500
+  TOKEN_PAIRS_SET: ICML_SET_OF_TOKEN_PAIRS
+
+FLiPS-Monochar-0-1:  # Main, FLiPS, Monochar + 0-1
+  min_seq_length: 100
+  nb_of_samples: 80
+  dyn_checking_batch_size: 10
+  TEMPERATURES: [1.0]
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048  # context window size, limits max tokens (within vllm setting)
+  MAX_TOKENS: 750  # Maximum number of generated tokens
+  TOKEN_PAIRS_SET: FULL_SET_OF_TOKEN_PAIRS
+
+LLMmapReproduction:  # LLMmap experiment
+  min_seq_length: null
+  nb_of_samples: null
+  dyn_checking_batch_size: 20
+  TEMPERATURES: [1.0]
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048  # context window size
+  MAX_TOKENS: 500  # Maximum number of generated tokens (set to 650 for LLMmap classifier limit)
+
+TempsImpact:  # Temperature experiment
+  min_seq_length: 100
+  nb_of_samples: 80
+  dyn_checking_batch_size: 20
+  TEMPERATURES: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 750
+  TOKEN_PAIRS_SET: SMALL_SET_OF_TOKEN_PAIRS
+
+FLiPS-Monochar-0-1_TEST:  # Test version
+  min_seq_length: 100
+  nb_of_samples: 10
+  dyn_checking_batch_size: 5
+  TEMPERATURES: [1.0]
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 750
+
+TempsImpact_TEST:  # Temperature experiment test
+  min_seq_length: 1
+  nb_of_samples: 10
+  dyn_checking_batch_size: 5
+  TEMPERATURES: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  MAX_TOKENS: 1  # Maximum number of generated tokens (limited for LLMmap classifier)
+
+Toy_ds:  # Toy dataset
+  min_seq_length: 1
+  nb_of_samples: 3
+  dyn_checking_batch_size: 5
+  TEMPERATURES: [1.0]
+  TOP_K: 50  # default value, according to literature
+  max_model_len: 2048
+  TOKEN_PAIRS_SET: TOY_SET_OF_TOKEN_PAIRS
+  MAX_TOKENS: 1

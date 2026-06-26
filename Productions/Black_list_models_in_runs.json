@@ -1,0 +1,100 @@
+{
+    "FLiPS_ICML_light_run": [
+        "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+        "togethercomputer/Llama-2-7B-32K-Instruct",
+        "meta-llama/Llama-2-70b-chat-hf",
+        "google/gemma-1.1-7b-it",
+        "nvidia/Llama3-ChatQA-1.5-8B",
+        "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        "Qwen/Qwen3-4B-Instruct-2507"
+    ],
+    "FLiPS_ICML_run": [
+        "togethercomputer/Llama-2-7B-32K-Instruct",
+        "meta-llama/Llama-2-70b-chat-hf"
+    ],
+    "LLMmap_ICML_run": [
+        "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+        "togethercomputer/Llama-2-7B-32K-Instruct",
+        "meta-llama/Llama-2-70b-chat-hf",
+        "google/gemma-1.1-7b-it",
+        "nvidia/Llama3-ChatQA-1.5-8B",
+        "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        "Qwen/Qwen3-4B-Instruct-2507"
+    ],
+    "FLiPS_ICML_run_woun": [
+        "togethercomputer/Llama-2-7B-32K-Instruct",
+        "meta-llama/Llama-2-70b-chat-hf"
+    ],
+    "Binaries_700_Charlie_run": [
+        "microsoft/Phi-3-mini-128k-instruct",
+        "google/gemma-1.1-7b-it",
+        "google/gemma-2-27b-it",
+        "google/gemma-2-9b-it",
+        "google/gemma-2b-it",
+        "mistralai/Mistral-7B-v0.1",
+        "meta-llama/Llama-2-13b-chat-hf",
+        "nvidia/Llama3-ChatQA-1.5-8B"
+    ],
+    "Bits_Delta_run_REAL": [
+        "deepseek/deepseek-r1",
+        "google/gemini-flash-1.5",
+        "meta-llama/Llama-2-7b-chat-hf",
+        "meta-llama/Llama-2-13b-chat-hf",
+        "microsoft/phi-2"
+    ],
+    "FLiPS-Monochar-0-1_run_240": [
+        "microsoft/Orca-2-13b",
+        "google/gemma-2b-it",
+        "Qwen/Qwen3-8B",
+        "mistralai/Mixtral-8x7B-v0.1",
+        "mistralai/Mistral-7B-v0.1"
+    ],
+    "FLiPS-Monochar-0-1_run_60": [
+        "microsoft/Orca-2-13b",
+        "google/gemma-2b-it",
+        "Qwen/Qwen3-8B",
+        "mistralai/Mixtral-8x7B-v0.1",
+        "mistralai/Mistral-7B-v0.1",
+        "meta-llama/llama-3.1-405b-instruct"
+    ],
+    "FLiPS-Monochar-0-1_run_60_TEST": [
+        "microsoft/Orca-2-13b",
+        "google/gemma-2b-it",
+        "Qwen/Qwen3-8B",
+        "mistralai/Mixtral-8x7B-v0.1",
+        "mistralai/Mistral-7B-v0.1",
+        "openai/gpt-5-nano",
+        "deepseek/deepseek-chat",
+        "google/gemini-2.5-flash-lite",
+        "meta-llama/llama-3.1-405b-instruct",
+        "anthropic/claude-3-haiku",
+        "qwen/qwen3-next-80b-a3b-instruct",
+        "openai/gpt-4.1-nano"
+    ],
+    "FLiPS-Monochar-0-1_run_TEST": [
+        "CohereLabs/aya-23-35B",
+        "HuggingFaceH4/zephyr-7b-beta",
+        "google/gemma-2b-it",
+        "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
+        "Qwen/Qwen2-1.5B-Instruct",
+        "Qwen/Qwen2-72B-Instruct",
+        "Qwen/Qwen3-8B",
+        "abacusai/Smaug-Llama-3-70B-Instruct",
+        "google/gemma-1.1-7b-it",
+        "gradientai/Llama-3-8B-Instruct-Gradient-1048k",
+        "meta-llama/Llama-2-70b-chat-hf",
+        "meta-llama/Meta-Llama-3-8B-Instruct",
+        "microsoft/Orca-2-13b",
+        "microsoft/Phi-3-medium-128k-instruct",
+        "microsoft/Phi-3-medium-4k-instruct",
+        "microsoft/Phi-3-mini-128k-instruct",
+        "mistralai/Mistral-7B-Instruct-v0.1",
+        "mistralai/Mistral-7B-Instruct-v0.2",
+        "mistralai/Mistral-7B-Instruct-v0.3",
+        "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        "mistralai/Mixtral-8x7B-v0.1",
+        "nvidia/Llama3-ChatQA-1.5-8B",
+        "togethercomputer/Llama-2-7B-32K-Instruct",
+        "upstage/SOLAR-10.7B-Instruct-v1.0"
+    ]
+}

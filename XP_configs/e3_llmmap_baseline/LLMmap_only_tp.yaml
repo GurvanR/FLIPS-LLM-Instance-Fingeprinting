@@ -1,0 +1,97 @@
+# LLMmap-ONLY F01 variant — the zero-download, out-of-box E3 curve.
+#
+# WHY ITS OWN DIRECTORY (e3_llmmap_baseline/, not e3_flips_vs_llmmap/):
+#   gate-A runs `run_experiments.py --config-dir e3_llmmap_baseline`, whose `*.yaml` glob
+#   (run_experiments.py:_find_yaml_configs) must resolve to EXACTLY this one config. Keeping it
+#   beside the 3-curve `e3_flips_vs_llmmap/FLIPS_mix_tp.yaml` would make the glob ambiguous and could
+#   pick up the data-gated config (which points its FLIPS arms at the ABSENT
+#   `Productions/FLiPS_ICML_run/...` and raises FileNotFoundError at checkpoint_utils.py:118).
+#
+# WHAT IT DOES:
+#   `classification_config.train_size_dict_map` has a SINGLE entry pointing at the shipped, in-repo
+#   LLMmap-IF cache (stays under e3_flips_vs_llmmap/; only this config moved). The "LLMmap" substring
+#   in the label routes load_train_size_dict (checkpoint_utils.py, `elif "LLMmap" in label`) to read
+#   that dir's results.json, and routes plot_group_curves (training_size_analysis.py:735) to the
+#   LLMmap dispatch branch — so the F01 figure is regenerated from the cache with no FLIPS .pkl and
+#   no access to the off-disk headline run. Dropping the two FLIPS-arm entries is the whole fix.
+#
+# HOW THE MAIN PIPELINE STAYS ZERO-DOWNLOAD (subset-compatible deviations from FLIPS_mix_tp.yaml):
+#   batch_classification_across_token_pairs ALWAYS runs the train-size classification pipeline
+#   (classify_batch.py:454) BEFORE plotting; with a fresh xp_name there is no checkpoint, so it
+#   re-classifies against present feature caches. The plotted F01 curve, however, comes ENTIRELY from
+#   the LLMmap-IF cache (plot_trainsize_wise_curves takes train_size_dicts_to_plot[0] = the cache),
+#   so the main pipeline's result is computed-then-discarded. We therefore point the main pipeline at
+#   the committed light subset and keep it tiny + valid:
+#     - token_pairs: the 5 CARVED pairs only (all FLiPS-group members; '0-1' is the lone non-member
+#       and breaks mix_tp). FLIPS_mix_tp.yaml's full 10-pair list would crash (no caches for 5 pairs).
+#     - batch_prediction_sizes capped at 4 so unique_tp_in_mix can ride the schema default 'max'
+#       (bs distinct pairs per mix): with 5 pairs, C(5,4)=5 >= max_nb_of_uplet (=2). Going to bs=8
+#       would need C(5,8) -> impossible, so the demo curve is plotted over N_t = 1..4 here.
+#     - small model_variations + compute_confusion_matrices: false — the main result is discarded, so
+#       keep it cheap. force_class_size is omitted (defaults to "auto" = balance to the smallest
+#       class); each (model,temp,sp) cell has 500 rows in the subset so auto resolves to 500, and it
+#       cannot affect the cache-driven F01 output regardless.
+#
+# Source for mirrored fields: XP_configs/e3_flips_vs_llmmap/FLIPS_mix_tp.yaml.
+
+experiment_fun: Batch_Classification_across_token_pairs
+include_quantized: null  # null -> exclude all quantizations (none carved into the light subset)
+# Omitted -> schema defaults (src/audit_llm/experiment_config_schema.py): features=SmallNist, alpha=0.05, min_seq_length=100.
+PRNGs: None  # Has to be None within an LLMmap xp; numpy_default stays in the cache for axis alignment
+models: []
+# The 5 carved token pairs (all FLiPS-group members). Explicit list: [] would resolve to the full
+# ICML set and KeyError on uncarved pairs.
+token_pairs: ['ali-yg', 'awk-ise', 'crit-SA', 'City-load', 'df-bits']
+
+sampling_parameters:
+  system_prompt_idx: []
+  temperature: []
+  frequency_penalty: [0.0]
+
+# Tiny grid (2 variations x 3 base models = 6 classes). The main classification is discarded for the
+# F01 figure (which is read from the LLMmap-IF cache), so this is kept minimal for speed.
+model_variations: [
+  {'temperature': [0.4, 1.0], 'system_prompt_idx': [-1]},
+]
+
+abliterated_models: None  # no abliterated classes in the light subset
+
+calculations:
+  token_pairs: token_pairs
+
+train_sizes: [40]
+
+classification_config:
+  # Single LLMmap-IF source. ORDER/label rules (load-bearing — do not change wording):
+  #   - "LLMmap" substring -> load_train_size_dict reads results.json (checkpoint_utils.py:141)
+  #     AND plot_group_curves takes the LLMmap dispatch branch (training_size_analysis.py:735).
+  # Path is relative to repo root — run_experiments.py sets cwd to repo root. The cache physically
+  # stays under e3_flips_vs_llmmap/; only THIS config lives in e3_llmmap_baseline/.
+  train_size_dict_map: {
+    "XP_configs/e3_flips_vs_llmmap/llmmap_if_data/ClosedSet/train_size_checkpoints": "LLMmap-IF",
+  }
+
+  # Omitted -> schema defaults: splitter_type=StratifiedShuffleSplit, default_normalization=auto,
+  # normalization_methods={seq_length: none}, compute_confusion_matrices=false,
+  # store_prediction_probas=true, compute_micro_pr_curve=true.
+  classifiers:
+    - XGBoost
+
+  n_splits: 2
+  test_size: 64
+  # force_class_size omitted -> defaults to "auto" (balance to the smallest class). Cells are 500
+  # rows each so auto resolves to 500; the F01 output is cache-driven and unaffected either way.
+
+  classifier_metrics: ['accuracy']
+  # bs 1..4 so unique_tp_in_mix can ride the schema default 'max' (bs distinct pairs per mix):
+  # 5 pairs ship, so C(5,4)=5 >= max_nb_of_uplet. The cached LLMmap-IF curve (results.json carries
+  # bs '1'..'8') is therefore plotted over N_t = 1..4 here.
+  batch_prediction_sizes: [1, 2, 3, 4]
+  # Only mix_tp_at_pred — bs=1 auto-falls back to tp_wise via the `bs == 1` guard in plot_group_curves.
+  batch_types: ['mix_tp_at_pred']
+  openset: false
+  m_test_size: 5
+  openset_m_splits: 10
+
+  # unique_tp_in_mix omitted -> schema default ['max']; feasible with 5 pairs at bs<=4 (see above).
+  max_nb_of_uplet: 2  # <= C(5,bs) available combinations for every bs 2..4

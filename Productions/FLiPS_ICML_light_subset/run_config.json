@@ -1,0 +1,72 @@
+{
+  "run_name": "FLiPS_ICML_run/DeepSeek_lite_1",
+  "scrapping_rule": "Graph_Numeric",
+  "min_seq_length": 100,
+  "dyn_checking_batch_size": 500,
+  "TOKEN_PAIRS_SET": "ICML_SET_OF_TOKEN_PAIRS",
+  "MAX_TOKENS": 500,
+  "vllm_model_config": {
+    "model_only_config": {
+      "dtype": "bfloat16",
+      "gpu_memory_utilization": 0.9,
+      "trust_remote_code": true,
+      "max_seq_len_to_capture": 2500,
+      "max_model_len": 2048,
+      "tensor_parallel_size": 1
+    },
+    "sampling_config": {
+      "top_k": 50,
+      "max_tokens": 500,
+      "logprobs": null
+    }
+  },
+  "hf_model_config": {
+    "device": "cuda:0",
+    "bs": 5,
+    "gpu": 1,
+    "model_only_config": {
+      "trust_remote_code": true,
+      "device_map": "auto"
+    },
+    "sampling_config": {
+      "max_new_tokens": 500,
+      "do_sample": true,
+      "top_k": 50,
+      "repetition_penalty": 1.05,
+      "output_logits": false,
+      "return_dict_in_generate": false
+    }
+  },
+  "openrouter_model_config": {
+    "sampling_config": {
+      "max_completion_tokens": 500
+    }
+  },
+  "Dataset_relative_path": "datasets/Bits_Datasets/FLiPS_ICML.csv",
+  "hours_delay": 0.0,
+  "outlines": false,
+  "created_at": "12/30/2025 15:45",
+  "Initial_checkpoint": false,
+  "vllm_models": {
+    "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct": true,
+    "google/gemma-2-9b-it": true,
+    "google/gemma-2-27b-it": true,
+    "CohereForAI/c4ai-command-r-plus": true,
+    "CohereForAI/c4ai-command-r-v01": true
+  },
+  "hf_models": {},
+  "openrouter_models": {},
+  "vllm_model_path": {
+    "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct": "",
+    "google/gemma-2-9b-it": "",
+    "google/gemma-2-27b-it": "",
+    "CohereForAI/c4ai-command-r-plus": "",
+    "CohereForAI/c4ai-command-r-v01": ""
+  },
+  "hf_model_path": {},
+  "openrouter_model_path": {},
+  "vllm_models_progression": "0/5",
+  "hf_models_progression": "0/0",
+  "openrouter_models_progression": "0/0",
+  "_light_subset_note": "Scrubbed slice of FLiPS_ICML_light_run/merged_sub_runs for the in-repo smoke fixture. HPC filesystem paths removed; only analysis-relevant fields kept."
+}

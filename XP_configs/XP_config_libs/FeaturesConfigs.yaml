@@ -1,0 +1,108 @@
+SmallNist:
+  intra_samples_features:
+    - seq_length
+
+  nist_tests:
+    block frequency: ['set_1']
+    non overlapping: [2,3]
+    overlapping patterns: [2,3]
+    monobit: []
+    run: []
+    longest one block: []
+    binary matrix rank: []
+    spectral: []
+    statistical: []
+    linear complexity: []
+    approximate entropy: []
+    cumulative sums 1s: []
+    cumulative sums 2s: []
+    random excursion: []
+
+  nist_tests_result_type:
+    - ts
+
+LongNist:
+  intra_samples_features:
+    - seq_length
+
+  nist_tests:
+    block frequency: ['set_1']
+    non overlapping: [2,3,4,5]
+    overlapping patterns: [2,3,4,5]
+    monobit: []
+    run: []
+    longest one block: []
+    binary matrix rank: []
+    spectral: []
+    statistical: []
+    linear complexity: []
+    approximate entropy: []
+    cumulative sums 1s: []
+    cumulative sums 2s: []
+    random excursion: []
+
+  nist_tests_result_type:
+    - ts
+
+DefaultConfig:
+
+  inter_samples_features:
+    #- Similarities_on_bit_sequences # A bit resourceful so not run until needed.
+     - Bits_Seqs_Bernoulli_probs
+    #'Bits_Covariance_matrix'
+     - Bits_Block_Entropy
+  similarity_metrics: ['Multiset_Jaccard']
+  similarity_k_list: [2, 3, 4 , 5]
+  similarity_agg_strategies: ['linear']
+  
+  intra_samples_features:
+    - seq_length
+
+  nist_tests:
+    block frequency: ['set_1']
+      
+    non overlapping: [2,3,] #4,5], # pattern sizes
+    overlapping patterns: [2,3] #,4,5], # pattern sizes
+    cumulative sums 1s: []
+    cumulative sums 2s: []
+    random excursion: []
+    monobit: []
+    run: []
+    longest one block: []
+    binary matrix rank: []
+    spectral:  []
+    #statistical: [], # Does not seem to work 
+    linear complexity: []
+    approximate entropy: []
+    ## Not added yet:
+    #'serial',
+    #'cumulative sums',
+    #'random excursion',
+    #'variant',
+
+  nist_tests_result_type:
+    - ts
+    - pv
+
+  
+SmallNist_only_pv:
+  # we don't add intra_samples_features such as seq_length because no p-value (so no possible nist_perf_test )
+
+  nist_tests:
+    block frequency: ['set_1']
+    non overlapping: [2,3]
+    overlapping patterns: [2,3]
+    monobit: []
+    run: []
+    longest one block: []
+    binary matrix rank: []
+    spectral: []
+    statistical: []
+    linear complexity: []
+    approximate entropy: []
+    cumulative sums 1s: []
+    cumulative sums 2s: []
+    random excursion: []
+
+  nist_tests_result_type:
+    - pv

@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install --no-interaction
+
+      - name: Lint (advisory)
+        run: poetry run flake8 src/audit_llm/
+        continue-on-error: true
+
+      - name: Import smoke
+        run: poetry run python -c "import audit_llm; print('audit_llm OK')"
+
+      - name: Light smoke test (in-repo subset)
+        run: poetry run python -m pytest tests/smoke/ -x -q --timeout=120
+        # Runs only tests that use the committed light subset; skips any test
+        # that requires downloaded Zenodo data (marked with pytest.mark.requires_data).
+        # the light-subset tests must also SKIP (not fail) when
+        # Productions/FLiPS_ICML_light_subset/ is absent (e.g. a fork that never carved it) —
+        # guard each with a fixture that skips on the missing subset, so CI stays green on
+        # forks/clones that never carved the light subset.

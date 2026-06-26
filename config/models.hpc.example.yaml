@@ -1,0 +1,19 @@
+# DO NOT commit with real paths - copy and adapt locally.
+#
+# Example overlay for HPC / cluster users. The public config/models.yaml resolves
+# every model through the standard Hugging Face cache (AUDIT_LLM_MODEL_CACHE, or
+# $HF_HOME/hub when unset). On a cluster where the models live on a shared,
+# read-only filesystem mirror, point the loader at that mirror instead - either
+# globally via model_cache_root, or per-model via the overrides map.
+#
+# Copy this file to config/models.hpc.local.yaml (keep it out of git) and edit
+# the paths to match your allocation. Nothing here is read unless you opt in.
+
+# Global cache root: every base/quantized/abliterated HF id is looked up beneath
+# this directory instead of the default Hugging Face cache.
+model_cache_root: /path/to/your/cluster/HuggingFace_Models/
+
+# Optional per-model overrides for ids that live outside model_cache_root.
+overrides:
+  # meta-llama/Meta-Llama-3-8B-Instruct: /path/to/your/cluster/HuggingFace_Models/meta-llama/Meta-Llama-3-8B-Instruct
+  # CohereForAI/c4ai-command-r-plus: /path/to/your/local/c4ai-command-r-plus

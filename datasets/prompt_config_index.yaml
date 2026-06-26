@@ -1,0 +1,24 @@
+1:
+    instruction_prompt: ip2
+    end_context: None
+    pre_prompt: sp0
+    learning_shot: 1
+    seed: 42
+    nb_of_bits: 1000
+
+2:
+    llmmap: 0
+3:
+    llmmap: 1
+4:
+    llmmap: 2
+5:
+    llmmap: 3
+6:
+    llmmap: 4
+7:
+    llmmap: 5
+8: 
+    llmmap: 6
+9:
+    llmmap: 7

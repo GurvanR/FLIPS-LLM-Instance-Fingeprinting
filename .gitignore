@@ -1,0 +1,48 @@
+.venv/
+__pycache__/
+*.pyc
+
+Answers/
+data/
+feature_computation_data/
+xp_logs/
+tmp/
+*.log
+*.ipynb
+*.pkl
+*.parquet
+*.npy
+dist/
+build/
+*.egg-info/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.vscode/
+.idea/
+*~
+*.ipynb_checkpoints/
+# Productions/ exclude + negations go LAST (after the extension globs above) so *.parquet/*.npy/*.pkl
+# cannot re-ignore the committed, git-tracked Productions/ deps. Negate each dir AND its contents
+# (the /** form) — git cannot re-include a file whose parent dir stayed excluded.
+Productions/*
+!Productions/Intersection_vocab/
+!Productions/Intersection_vocab/**
+!Productions/Black_list_models_in_runs.json
+!Productions/FLiPS_ICML_light_subset/
+!Productions/FLiPS_ICML_light_subset/**
+
+# The TOP-LEVEL data/ dir holds tracked repro metadata (manifest.sha256,
+# LICENSE, README). Re-include it explicitly (anchored to root) — the bare `data/` rule above
+# still ignores nested */data/ runtime-output dirs elsewhere in the tree.
+!/data/
+!/data/**
+
+# Local run output under the light subset — NOT part of the committed feature_computation_data/.
+# The broad `!FLiPS_ICML_light_subset/**` negation above re-includes everything under the subset,
+# so these run-output paths show up as untracked; re-ignore exactly them (last-match-wins) so a
+# blanket `git add` can't pull classification logs/checkpoints into the public repo.
+Productions/FLiPS_ICML_light_subset/Experiments/Batch_Classification_across_token_pairs/
+Productions/FLiPS_ICML_light_subset/Experiments/banned_token_pairs.json

@@ -1,0 +1,68 @@
+# Template — copy this dir to XP_configs/<your_name>/ and edit to run your own scenario.
+#
+# This is the analysis-side half of "run your own scenario": it points at a
+# declarative scenario (config/scenarios/example_custom.yaml) via the `scenario:`
+# key instead of an inline `model_variations` grid. The scenario SELECTS which
+# generated (model × variation) cells become classification classes.
+#
+# It is deliberately a near-copy of XP_configs/Smoke_light/Smoke_light.yaml — same
+# light-subset token pairs and classifier settings, so it runs on CPU with zero
+# download — with the inline `model_variations` replaced by `scenario:`.
+#
+#   Walkthrough          : docs/reproduction/custom-scenario.md
+#   Scenario field rules : config/scenarios/README.md
+#   Config field rules   : docs/codebase/configuration-advanced.md
+#
+# Run it:
+#   python XP_configs/run_experiments.py --config-dir example_custom \
+#       --run-name FLiPS_ICML_light_subset --xp-suffix example --mode inline
+#   # or: make example-scenario
+experiment_fun: Batch_Classification_across_token_pairs
+include_quantized: null  # null/None -> exclude all quantizations (none in the subset)
+# Omitted -> schema defaults (src/audit_llm/experiment_config_schema.py): features=SmallNist, alpha=0.05, min_seq_length=100.
+PRNGs: None  # numpy_default stays in the feature cache for axis alignment, not classified
+models: []
+token_pairs: ['ali-yg', 'awk-ise', 'crit-SA', 'City-load', 'df-bits']  # the 5 carved light-subset token pairs
+
+sampling_parameters:
+  system_prompt_idx: []   # empty -> the scenario does the (temp, sp) selection
+  temperature: []
+  frequency_penalty: [0.0]
+
+# Model × variation selection comes from the declarative scenario, NOT an inline
+# model_variations grid. config/scenarios/example_custom.yaml selects
+# 2 base models × 2 temperatures = 4 classes.
+scenario: example_custom
+
+calculations:
+  token_pairs: token_pairs
+
+figures:
+
+train_sizes: [40]
+
+classification_config:
+  # Most knobs are omitted on purpose -> they fall back to the schema defaults in
+  # src/audit_llm/experiment_config_schema.py (splitter_type=StratifiedShuffleSplit,
+  # force_class_size=auto, default_normalization=auto, normalization_methods={seq_length: none},
+  # compute_confusion_matrices=false, store_prediction_probas=true, compute_micro_pr_curve=true,
+  # micro_pr_curve_cache=true, unique_tp_in_mix=['max']).
+  # Only set a key here when you want a NON-default value.
+  classifiers:
+    - XGBoost
+
+  n_splits: 2
+  test_size: 64
+
+  classifier_metrics: ['accuracy']
+  batch_prediction_sizes: [1, 2]
+  batch_types: [
+                'mix_tp_at_pred',
+                'tp_wise']
+  openset: false
+  m_test_size: 5
+  openset_m_splits: 10
+
+  # unique_tp_in_mix omitted -> schema default ['max'] (bs distinct pairs per mixed batch);
+  # feasible here because 5 pairs ship and bs only reaches 2 (C(5,2)=10 >= max_nb_of_uplet).
+  max_nb_of_uplet: 2

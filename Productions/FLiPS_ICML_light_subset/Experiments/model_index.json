@@ -1,0 +1,6 @@
+{
+    "CohereForAI/c4ai-command-r-plus": 0,
+    "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct": 1,
+    "google/gemma-2-9b-it": 2,
+    "numpy_default": 3
+}

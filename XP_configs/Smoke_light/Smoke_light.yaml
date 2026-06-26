@@ -1,0 +1,54 @@
+  # Zero-download CPU smoke config — runs against the committed in-repo
+  # Productions/FLiPS_ICML_light_subset/ (5 token pairs, 3 base model classes).
+  # This is the SAME config `make gate-golden` re-runs to assert the golden
+  # regression in Productions/FLiPS_ICML_light_subset/golden_refs.json.
+  # Used by `make smoke` / `make gate-golden`.
+  experiment_fun: Batch_Classification_across_token_pairs
+  include_quantized: null  # null/None -> exclude all quantizations (none shipped in the subset)
+  # Omitted -> schema defaults (src/audit_llm/experiment_config_schema.py): features=SmallNist, alpha=0.05, min_seq_length=100.
+  PRNGs: None  # numpy_default stays in the feature cache for axis alignment, not classified
+  models: []
+  token_pairs: ['ali-yg', 'awk-ise', 'crit-SA', 'City-load', 'df-bits']  # the 5 carved token pairs (all in the FLiPS group; explicit, [] = full ICML set)
+
+  sampling_parameters:
+    system_prompt_idx: []
+    temperature: []
+    frequency_penalty: [0.0]
+
+  # Two base variation cells -> 2 variations x 3 base models = 6 classes.
+  model_variations: [
+    {'temperature': [0.4, 1.0], 'system_prompt_idx': [-1]},
+  ]
+
+  abliterated_models: None  # no abliterated classes in the smoke
+
+  calculations:
+    token_pairs: token_pairs
+
+  figures:
+
+  train_sizes: [40]
+
+  classification_config:
+    # Omitted -> schema defaults: splitter_type=StratifiedShuffleSplit, default_normalization=auto,
+    # normalization_methods={seq_length: none}, compute_confusion_matrices=false, store_prediction_probas=true,
+    # compute_micro_pr_curve=true, micro_pr_curve_cache=true.
+    classifiers:
+      - XGBoost
+
+    n_splits: 2
+    test_size: 64
+    # force_class_size omitted -> "auto" (balance to the smallest class, ~500 rows here).
+
+    classifier_metrics: ['accuracy']
+    batch_prediction_sizes: [1, 2]
+    batch_types: [
+                  'mix_tp_at_pred',
+                  'tp_wise']
+    openset: false
+    m_test_size: 5
+    openset_m_splits: 10
+
+    # unique_tp_in_mix omitted -> schema default ['max'] (bs distinct pairs per mixed batch).
+    # Feasible because the subset ships 5 pairs and bs only reaches 2 here: C(5,2)=10 >= max_nb_of_uplet.
+    max_nb_of_uplet: 2
